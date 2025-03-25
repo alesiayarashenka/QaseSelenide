@@ -6,7 +6,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import pages.ProjectsListPage;
+import pages.TestCaseListPage;
+import steps.TestCaseSteps;
 import steps.LoginSteps;
+import steps.ProjectSteps;
 import utils.PropertyReader;
 
 import java.util.HashMap;
@@ -16,17 +20,27 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static com.codeborne.selenide.WebDriverRunner.setWebDriver;
 
 public class BaseTest {
+    ProjectsListPage projectsListPage;
     protected LoginSteps loginSteps;
+    protected ProjectSteps projectSteps;
+    protected TestCaseSteps testCaseSteps;
+    protected TestCaseListPage testCaseListPage;
     public static String USER = PropertyReader.getProperty("user");
     public static String PASSWORD = PropertyReader.getProperty("password");
     public static String LOGIN_URL = PropertyReader.getProperty("loginUrl");
+    public static String PROJECT_LIST_URL = PropertyReader.getProperty("projectListUrl");
 
     public void initPages() {
         loginSteps = new LoginSteps();
+        projectSteps = new ProjectSteps();
+        testCaseSteps = new TestCaseSteps();
+        projectsListPage = new ProjectsListPage();
+        testCaseListPage = new TestCaseListPage();
     }
 
     @BeforeMethod
-    public void initTest(){
+    public void initTest() {
+
         ChromeOptions options = new ChromeOptions();
         Map<String, Object> prefs = new HashMap<>();
         options.addArguments("--disable-popup-blocking");
