@@ -8,7 +8,8 @@ public class Button {
     public Button() {
     }
 
-    public void click(SelenideElement selenideElement){
+    public void click(SelenideElement selenideElement) {
+        selenideElement.shouldBe(Condition.enabled);
         selenideElement.shouldBe(Condition.visible).click();
     }
 }
