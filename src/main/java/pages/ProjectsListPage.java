@@ -4,18 +4,16 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import elements.Button;
 import objects.Project;
-import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.open;
 
 public class ProjectsListPage extends BasePage {
 
     private static final SelenideElement CREATE_NEW_PROJECT = $x("//*[text()='Create new project']");
-    private static final String PROJECT_NAME_FIELD_XPATH = "//table//a[contains(text(), '%s')]";
-
-    public static SelenideElement OPEN_PROJECT_BUTTON(String name) {
-        return $(By.xpath("//a[@href='/project/" + name + "']"));
-    }
+    private static final String PROJECT_FIELD_XPATH = "//div[@class='NFxRR3']//*[contains(text(), '%s')]";
+    private static final String DIRECT_TO_TEST_CASE_MODAL = "//a[@href='/project/%s'][contains(text(),'%s')]";
+    private static final String PROJECT_NAME_XPATH = "//*[text()='%s']";
 
     public ProjectsListPage isOpened() {
         CREATE_NEW_PROJECT.shouldBe(Condition.visible);
@@ -27,17 +25,21 @@ public class ProjectsListPage extends BasePage {
         return this;
     }
 
-    public String getExistProjectName(String project) {
-        return $x(String.format(PROJECT_NAME_FIELD_XPATH, project)).getText();
-    }
-
-    public NewProjectModalPage clickNewProjectButton() {
+    public ProjectsListPage clickNewProjectButton() {
         new Button().click(CREATE_NEW_PROJECT);
-        return new NewProjectModalPage();
+        return this;
     }
 
-    public NewCaseTestModalPage directToCaseForm(Project project) {
-        new Button().click(OPEN_PROJECT_BUTTON(project.getProjectCode().toUpperCase()));
-        return new NewCaseTestModalPage();
+    public String getExistProjectName(String field) {
+        return $x(String.format(PROJECT_FIELD_XPATH, field)).getText();
+    }
+
+    public ProjectSettingsPage directToCaseForm(Project project) {
+        new Button().click($x(String.format(DIRECT_TO_TEST_CASE_MODAL, project.getProjectCode().toUpperCase(), project.getProjectName())));
+        return new ProjectSettingsPage();
+    }
+
+    public boolean projectIsPresentOnList(Project project) {
+        return $x(String.format(PROJECT_NAME_XPATH, project.getProjectName())).exists();
     }
 }

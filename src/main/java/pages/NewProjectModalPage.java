@@ -9,11 +9,10 @@ import objects.Project;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class NewProjectModalPage extends BasePage {
+    private static final SelenideElement CREATE_PROJECT = $x("//*[text()='Create project']");
 
     public NewProjectModalPage() {
     }
-
-    private static final SelenideElement CREATE_PROJECT = $x("//*[text()='Create project']");
 
     public NewProjectModalPage isOpened() {
         CREATE_PROJECT.shouldBe(Condition.visible);

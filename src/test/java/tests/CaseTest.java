@@ -45,6 +45,8 @@ public class CaseTest extends BaseTest {
                 closeTestCaseForm();
         softAssert.assertEquals(testCaseListPage.getExistTestCaseField(project.getProjectCode().toUpperCase()), project.getProjectCode().toUpperCase() + "-1");
         softAssert.assertEquals(testCaseListPage.getExistTestCaseField(testCase.getCaseTitle()), testCase.getCaseTitle());
+        projectSettingSteps.deleteNewProject(PROJECT_LIST_URL,project);
+        softAssert.assertEquals(projectsListPage.projectIsPresentOnList(project), false);
         softAssert.assertAll();
     }
 }

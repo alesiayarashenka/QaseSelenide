@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Selenide.$x;
 public class TestCaseListPage extends BasePage {
 
     private static final SelenideElement CLOSE_TEST_CASE = $x("//*[@aria-label ='Close']");
-    private static final String TEST_CASE_FIELD_XPATH = "//div[@class='avg9d1 tYBglj']//*[contains(text(), '%s')]";
+    private static final String TEST_CASE_FIELD_XPATH = "//div[@class='Fdxe2X']//*[contains(text(), '%s')]";
     private static final SelenideElement CREATE_NEW_TEST = $x("//*[text()='New test']");
 
     public TestCaseListPage() {

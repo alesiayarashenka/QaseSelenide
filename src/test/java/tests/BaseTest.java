@@ -8,6 +8,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import pages.ProjectsListPage;
 import pages.TestCaseListPage;
+import steps.ProjectSettingSteps;
 import steps.TestCaseSteps;
 import steps.LoginSteps;
 import steps.ProjectSteps;
@@ -25,6 +26,7 @@ public class BaseTest {
     protected ProjectSteps projectSteps;
     protected TestCaseSteps testCaseSteps;
     protected TestCaseListPage testCaseListPage;
+    protected ProjectSettingSteps projectSettingSteps;
     public static String USER = PropertyReader.getProperty("user");
     public static String PASSWORD = PropertyReader.getProperty("password");
     public static String LOGIN_URL = PropertyReader.getProperty("loginUrl");
@@ -36,6 +38,7 @@ public class BaseTest {
         testCaseSteps = new TestCaseSteps();
         projectsListPage = new ProjectsListPage();
         testCaseListPage = new TestCaseListPage();
+        projectSettingSteps = new ProjectSettingSteps();
     }
 
     @BeforeMethod
