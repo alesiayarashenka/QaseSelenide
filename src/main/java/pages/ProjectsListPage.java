@@ -34,12 +34,12 @@ public class ProjectsListPage extends BasePage {
         return $x(String.format(PROJECT_FIELD_XPATH, field)).getText();
     }
 
-    public ProjectSettingsPage directToCaseForm(Project project) {
-        new Button().click($x(String.format(DIRECT_TO_TEST_CASE_MODAL, project.getProjectCode().toUpperCase(), project.getProjectName())));
+    public ProjectSettingsPage directToCaseForm(String code, String name) {
+        new Button().click($x(String.format(DIRECT_TO_TEST_CASE_MODAL, code, name)));
         return new ProjectSettingsPage();
     }
 
-    public boolean projectIsPresentOnList(Project project) {
-        return $x(String.format(PROJECT_NAME_XPATH, project.getProjectName())).exists();
+    public boolean projectIsPresentOnList(String name) {
+        return $x(String.format(PROJECT_NAME_XPATH, name)).exists();
     }
 }

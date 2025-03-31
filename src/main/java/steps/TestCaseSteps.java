@@ -20,8 +20,8 @@ public class TestCaseSteps extends BaseSteps {
     }
 
     @Step("fill details in form to create new test case")
-    public void createNewTestCase(Project project, TestCase testCase) {
-        projectsListPage.directToCaseForm(project);
+    public void createNewTestCase(String code, String name,TestCase testCase) {
+        projectsListPage.directToCaseForm(code, name);
         testCaseListPage.openCaseTestForm();
         newCaseTestModalPage.fillTestCaseForm(testCase);
         testCaseListPage.isOpened();

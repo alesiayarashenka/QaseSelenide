@@ -5,18 +5,15 @@ import objects.TestCase;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.util.Random;
-
 public class CaseTest extends BaseTest {
 
-    Random random = new Random();
     SoftAssert softAssert = new SoftAssert();
 
     @Test
     public void createTestCaseTest() {
         Project project = new Project();
-        project.setProjectName("project" + random.nextInt(10));
-        project.setProjectCode("code" + random.nextInt(10));
+        project.setProjectName("project");
+        project.setProjectCode("code");
         project.setProjectDescription("nothing");
 
         TestCase testCase = new TestCase();
@@ -40,13 +37,11 @@ public class CaseTest extends BaseTest {
         projectSteps.
                 openProjectsListPage(PROJECT_LIST_URL);
         testCaseSteps.
-                createNewTestCase(project, testCase);
+                createNewTestCase(project.getProjectCode().toUpperCase(), project.getProjectName(), testCase);
         testCaseSteps.
                 closeTestCaseForm();
         softAssert.assertEquals(testCaseListPage.getExistTestCaseField(project.getProjectCode().toUpperCase()), project.getProjectCode().toUpperCase() + "-1");
         softAssert.assertEquals(testCaseListPage.getExistTestCaseField(testCase.getCaseTitle()), testCase.getCaseTitle());
-        projectSettingSteps.deleteNewProject(PROJECT_LIST_URL,project);
-        softAssert.assertEquals(projectsListPage.projectIsPresentOnList(project), false);
         softAssert.assertAll();
     }
 }

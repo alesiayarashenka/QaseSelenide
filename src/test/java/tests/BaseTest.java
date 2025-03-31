@@ -1,11 +1,16 @@
 package tests;
 
 import com.codeborne.selenide.Configuration;
+import objects.Project;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
+import pages.DeleteProjectModalPage;
+import pages.ProjectSettingsPage;
 import pages.ProjectsListPage;
 import pages.TestCaseListPage;
 import steps.ProjectSettingSteps;
@@ -27,6 +32,8 @@ public class BaseTest {
     protected TestCaseSteps testCaseSteps;
     protected TestCaseListPage testCaseListPage;
     protected ProjectSettingSteps projectSettingSteps;
+    protected ProjectSettingsPage projectSettingsPage;
+    protected DeleteProjectModalPage deleteProjectModalPage;
     public static String USER = PropertyReader.getProperty("user");
     public static String PASSWORD = PropertyReader.getProperty("password");
     public static String LOGIN_URL = PropertyReader.getProperty("loginUrl");
@@ -39,6 +46,8 @@ public class BaseTest {
         projectsListPage = new ProjectsListPage();
         testCaseListPage = new TestCaseListPage();
         projectSettingSteps = new ProjectSettingSteps();
+        projectSettingsPage = new ProjectSettingsPage();
+        deleteProjectModalPage = new DeleteProjectModalPage();
     }
 
     @BeforeMethod
@@ -62,5 +71,18 @@ public class BaseTest {
     @AfterMethod
     public void endTest() {
         getWebDriver().quit();
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void deleteNewProject() {
+        projectsListPage.openProjectList(PROJECT_LIST_URL);
+        projectsListPage.directToCaseForm("CODE","project");
+        testCaseListPage.isOpened();
+        projectSettingsPage.clickOnSettingsButton();
+        projectSettingsPage.isOpened();
+        projectSettingsPage.clickDeleteProjectButton();
+        deleteProjectModalPage.clickDeleteProjectButtonOnPopUp();
+        projectsListPage.isOpened();
+        Assert.assertEquals(projectsListPage.projectIsPresentOnList("project"), false);
     }
 }
